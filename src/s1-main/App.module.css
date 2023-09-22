@@ -1,5 +1,10 @@
 .App {
     --header_height: 60px;
+    width: 1280px;
+    padding: 20px;
+    border-top: 1px solid rgba(217, 217, 217, 1);
+    border-bottom: 1px solid rgba(217, 217, 217, 1);
+
 }
 
 .hw {
@@ -7,5 +12,15 @@
 }
 
 .hwTitle {
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
 
 }
+
