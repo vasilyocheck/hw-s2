@@ -5,6 +5,7 @@
     height: 50px;
     display: flex;
     justify-content: space-between;
+    transition-duration: 500ms;
 }
 
 .header h1 {
