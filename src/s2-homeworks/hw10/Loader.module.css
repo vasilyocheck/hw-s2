@@ -1,3 +1,71 @@
+/*
+:root {
+    --size: 6px;
+    --highlight: #8f76f8;
+}
+
 .loader {
-    /*свг и/или анимация*/
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border: var(--size) solid #ecebeb;
+    border-radius: 50%;
+}
+
+.loader::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--size)* -1);
+    left: calc(var(--size)* -1);
+    width: 100%;
+    height: 100%;
+    border: var(--size) solid transparent;
+    border-top: var(--size) solid var(--highlight);
+    border-right: var(--size) solid var(--highlight);
+    border-radius: 50%;
+    animation: loading 1.2s ease-in-out infinite;
+}
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+*/
+
+.loader {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(#512DE4, transparent);
+
+    animation: rotating 1s linear infinite;
+}
+
+.loader::before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 10px;
+    left: 10px;
+    border-radius: 50%;
+    background: white;
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
