@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import s from './HW11.module.css'
 import s2 from '../../s1-main/App.module.css'
 import {restoreState} from '../hw06/localStorage/localStorage'
@@ -14,11 +14,6 @@ function HW11() {
     // for autotests // не менять // можно подсунуть в локалСторэдж нужные числа, чтоб увидеть как они отображаются
     const [value1, setValue1] = useState(restoreState<number>('hw11-value1', 0))
     const [value2, setValue2] = useState(restoreState<number>('hw11-value2', 100))
-    const [value3, setValue3] = useState(50);
-    /*useEffect(() => {
-        localStorage.setItem('hw11-value1', JSON.stringify(0));
-        localStorage.setItem('hw11-value2', JSON.stringify(100));
-    }, []);*/
     const change = (event: Event,  value: number | number[]) => {
         // пишет студент // если пришёл массив - сохранить значения в оба useState, иначе в первый
         if(typeof value === 'number') {
@@ -27,7 +22,6 @@ function HW11() {
             setValue1(value[0])
             setValue2(value[1]);
         }
-
     }
 
     return (
@@ -55,7 +49,6 @@ function HW11() {
                             max={100}
                             onChange={change}
                         />
-
                         <span id={'hw11-value-2'} className={s.number}>{value2}</span>
                     </div>
                 </div>
