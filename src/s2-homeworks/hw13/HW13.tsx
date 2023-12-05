@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import s2 from '../../s1-main/App.module.css'
 import s from './HW13.module.css'
 import SuperButton from '../hw04/common/c2-SuperButton/SuperButton'
-import axios from 'axios'
+import axios, {AxiosError} from 'axios'
 import success200 from './images/200.svg'
 import error400 from './images/400.svg'
 import error500 from './images/500.svg'
@@ -30,18 +30,35 @@ const HW13 = () => {
         setImage('')
         setText('')
         setInfo('...loading')
-
+        console.log('hw13');
         axios
             .post(url, {success: x})
             .then((res) => {
                 setCode('Код 200!')
                 setImage(success200)
                 // дописать
+                setText(`...всё ок)`);
+                setInfo('код 200 - обычно означает что скорее всего всё ок)')
 
             })
             .catch((e) => {
                 // дописать
-
+                if(e?.response?.request?.status === 400) {
+                    setCode('Ошибка 400!');
+                    setText(`Ты не отправил success в body вообще!`)
+                    setImage(error400);
+                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!');
+                }  else if(e?.response?.request?.status === 500) {
+                    setCode('Ошибка 500!');
+                    setText('эмитация ошибки на сервере');
+                    setImage(error500);
+                    setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)');
+                } else {
+                    setCode('Error!');
+                    setText('Network Error\n' + 'AxiosError')
+                    setImage(errorUnknown);
+                    setInfo('Error');
+                }
             })
     }
 
@@ -56,7 +73,8 @@ const HW13 = () => {
                         onClick={send(true)}
                         xType={'secondary'}
                         // дописать
-
+                        disabled={info === '...loading'}
+                        style={{width: '130px', fontSize: '14px', backgroundColor: 'white'}}
                     >
                         Send true
                     </SuperButton>
@@ -65,6 +83,8 @@ const HW13 = () => {
                         onClick={send(false)}
                         xType={'secondary'}
                         // дописать
+                        disabled={info === '...loading'}
+                        style={{width: '130px', fontSize: '14px', backgroundColor: 'white'}}
 
                     >
                         Send false
@@ -74,7 +94,8 @@ const HW13 = () => {
                         onClick={send(undefined)}
                         xType={'secondary'}
                         // дописать
-
+                        disabled={info === '...loading'}
+                        style={{width: '180px', fontSize: '14px', backgroundColor: 'white'}}
                     >
                         Send undefined
                     </SuperButton>
@@ -83,7 +104,8 @@ const HW13 = () => {
                         onClick={send(null)} // имитация запроса на не корректный адрес
                         xType={'secondary'}
                         // дописать
-
+                        disabled={info === '...loading'}
+                        style={{width: '130px', fontSize: '14px', backgroundColor: 'white'}}
                     >
                         Send null
                     </SuperButton>
