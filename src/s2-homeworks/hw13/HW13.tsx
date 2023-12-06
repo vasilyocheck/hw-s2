@@ -30,34 +30,29 @@ const HW13 = () => {
         setImage('')
         setText('')
         setInfo('...loading')
-        console.log('hw13');
         axios
             .post(url, {success: x})
             .then((res) => {
-                setCode('Код 200!')
+                setCode(`Код ${res.request.status}!`)
                 setImage(success200)
                 // дописать
-                setText(`...всё ок)`);
-                setInfo('код 200 - обычно означает что скорее всего всё ок)')
+                setText(res.data.errorText);
+                setInfo(res.data.info)
 
             })
             .catch((e) => {
                 // дописать
-                if(e?.response?.request?.status === 400) {
-                    setCode('Ошибка 400!');
-                    setText(`Ты не отправил success в body вообще!`)
-                    setImage(error400);
-                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!');
-                }  else if(e?.response?.request?.status === 500) {
-                    setCode('Ошибка 500!');
-                    setText('эмитация ошибки на сервере');
-                    setImage(error500);
-                    setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)');
-                } else {
-                    setCode('Error!');
-                    setText('Network Error\n' + 'AxiosError')
+                console.log(e)
+                if(e?.response?.request?.status) {
+                    setCode(`Ошибка ${e.response.request.status}!`);
+                    setText(e.response.data.errorText);
+                    setImage(e.response.request.status === 500 ? error500 : error400);
+                    setInfo(e.response.data.info);
+                }  else {
+                    setCode(`${e.message.split(' ')[1]}!`);
+                    setText(`${e.message} ${e.name}`)
                     setImage(errorUnknown);
-                    setInfo('Error');
+                    setInfo(`${e.message.split(' ')[1]}`);
                 }
             })
     }
