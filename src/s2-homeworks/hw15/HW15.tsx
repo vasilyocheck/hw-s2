@@ -5,6 +5,7 @@ import axios from 'axios'
 import SuperPagination from './common/c9-SuperPagination/SuperPagination'
 import {useSearchParams} from 'react-router-dom'
 import SuperSort from './common/c10-SuperSort/SuperSort'
+import {serialize} from "node:v8";
 
 /*
 * 1 - дописать SuperPagination
@@ -27,6 +28,11 @@ type ParamsType = {
     count: number
 }
 
+type SendQueryParamsType = {
+    page: string,
+    count: string
+}
+
 const getTechs = (params: ParamsType) => {
     return axios
         .get<{ techs: TechType[], totalCount: number }>(
@@ -41,33 +47,52 @@ const getTechs = (params: ParamsType) => {
 const HW15 = () => {
     const [sort, setSort] = useState('')
     const [page, setPage] = useState(1)
-    const [count, setCount] = useState(4)
+    const [count, setCount] = useState(7)
     const [idLoading, setLoading] = useState(false)
     const [totalCount, setTotalCount] = useState(100)
     const [searchParams, setSearchParams] = useSearchParams()
     const [techs, setTechs] = useState<TechType[]>([])
 
-    const sendQuery = (params: any) => {
+    const sendQuery = async (params: SendQueryParamsType) => {
         setLoading(true)
-        getTechs(params)
-            .then((res) => {
-                // делает студент
+        const page = Number(params.page) || 1;
+        const count = Number(params.count) || 4;
+        try {
+            const res = await getTechs({sort, page, count});
+            if(res) {
+                console.log(res)
+                setTechs(res.data.techs);
+                setTotalCount(res.data.totalCount);
+            } else {
+                console.log('error occurred');
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoading(false)
+        }
 
+        /*getTechs(params)
+            .then((res ) => {
+                // делает студент
+                console.log(res);
+                setTechs(res.data.techs);
                 // сохранить пришедшие данные
 
                 //
-            })
+            })*/
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
         // делает студент
-
+        setPage(newPage);
+        setCount(newCount)
         // setPage(
         // setCount(
-
+        sendQuery({page: `${newPage}`, count: `${newCount}`})
         // sendQuery(
         // setSearchParams(
-
+        setSearchParams({page: `${newPage}`, count: `${newCount}`})
         //
     }
 
@@ -76,7 +101,7 @@ const HW15 = () => {
 
         // setSort(
         // setPage(1) // при сортировке сбрасывать на 1 страницу
-
+        setPage(1);
         // sendQuery(
         // setSearchParams(
 

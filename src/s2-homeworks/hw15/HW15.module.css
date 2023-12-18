@@ -1,25 +1,41 @@
 .tech {
-    width: 50vw;
+    width: 50%;
+    padding-left: 18px;
 }
 
 .developer {
-
+ width: 50%;
 }
 
 .techHeader {
-    width: 50vw;
+    width: 50%;
+    padding-left: 18px;
 }
 
 .developerHeader {
-
+    width: 50%
 }
 
 .row {
     display: flex;
+    width: 606px;
+    height: 36px;
+    border-bottom: 1px solid #E5E5E5;
+}
+.row:last-child {
+    border-bottom: none;
 }
 
 .rowHeader {
+    width: 606px;
+    height: 36px;
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #E5E5E5;
+    text-transform: capitalize;
+    color: #000;
+    font-weight: 600;
 }
 
 .loading {
