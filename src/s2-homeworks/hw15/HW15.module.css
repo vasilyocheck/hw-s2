@@ -4,7 +4,7 @@
 }
 
 .developer {
- width: 50%;
+    width: 50%;
 }
 
 .techHeader {
@@ -22,6 +22,7 @@
     height: 36px;
     border-bottom: 1px solid #E5E5E5;
 }
+
 .row:last-child {
     border-bottom: none;
 }
@@ -39,5 +40,15 @@
 }
 
 .loading {
-
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.56);
+    z-index: 9999;
 }
+
+
+

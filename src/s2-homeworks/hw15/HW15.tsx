@@ -5,7 +5,7 @@ import axios from 'axios'
 import SuperPagination from './common/c9-SuperPagination/SuperPagination'
 import {useSearchParams} from 'react-router-dom'
 import SuperSort from './common/c10-SuperSort/SuperSort'
-import {serialize} from "node:v8";
+import {Loader} from "../hw10/Loader";
 
 /*
 * 1 - дописать SuperPagination
@@ -52,7 +52,6 @@ const HW15 = () => {
     const [totalCount, setTotalCount] = useState(100)
     const [searchParams, setSearchParams] = useSearchParams()
     const [techs, setTechs] = useState<TechType[]>([])
-
     const sendQuery = async (params: SendQueryParamsType) => {
         setLoading(true)
         const page = Number(params.page) || 1;
@@ -60,7 +59,6 @@ const HW15 = () => {
         try {
             const res = await getTechs({sort, page, count});
             if(res) {
-                console.log(res)
                 setTechs(res.data.techs);
                 setTotalCount(res.data.totalCount);
             } else {
@@ -69,43 +67,22 @@ const HW15 = () => {
         } catch (e) {
             console.log(e)
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-
-        /*getTechs(params)
-            .then((res ) => {
-                // делает студент
-                console.log(res);
-                setTechs(res.data.techs);
-                // сохранить пришедшие данные
-
-                //
-            })*/
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
-        // делает студент
         setPage(newPage);
         setCount(newCount)
-        // setPage(
-        // setCount(
         sendQuery({page: `${newPage}`, count: `${newCount}`})
-        // sendQuery(
-        // setSearchParams(
         setSearchParams({page: `${newPage}`, count: `${newCount}`})
-        //
     }
 
     const onChangeSort = (newSort: string) => {
-        // делает студент
-
-        // setSort(
-        // setPage(1) // при сортировке сбрасывать на 1 страницу
+        setSort((prevState) => newSort);
         setPage(1);
-        // sendQuery(
-        // setSearchParams(
-
-        //
+        sendQuery({page: `1`, count: `${count}`})
+        setSearchParams({page: `1`, count: `${count}`})
     }
 
     useEffect(() => {
@@ -113,7 +90,7 @@ const HW15 = () => {
         sendQuery({page: params.page, count: params.count})
         setPage(+params.page || 1)
         setCount(+params.count || 4)
-    }, [])
+    }, [sort])
 
     const mappedTechs = techs.map(t => (
         <div key={t.id} className={s.row}>
@@ -132,7 +109,7 @@ const HW15 = () => {
             <div className={s2.hwTitle}>Homework #15</div>
 
             <div className={s2.hw}>
-                {idLoading && <div id={'hw15-loading'} className={s.loading}>Loading...</div>}
+                {idLoading && <div id={'hw15-loading'} className={s.loading}><Loader /></div>}
 
                 <SuperPagination
                     page={page}

@@ -24,6 +24,7 @@
 
 .hw {
     gap: 24px;
+    position: relative;
 }
 
 .hwTitle {
