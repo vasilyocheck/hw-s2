@@ -1,10 +1,15 @@
 .tech {
     width: 50%;
     padding-left: 18px;
+    display: flex;
+    align-items: center;
+
 }
 
 .developer {
     width: 50%;
+    display: flex;
+    align-items: center;
 }
 
 .techHeader {
