@@ -79,7 +79,7 @@ const HW15 = () => {
     }
 
     const onChangeSort = (newSort: string) => {
-        setSort((prevState) => newSort);
+        setSort(newSort);
         setPage(1);
         sendQuery({page: `1`, count: `${count}`})
         setSearchParams({page: `1`, count: `${count}`})
